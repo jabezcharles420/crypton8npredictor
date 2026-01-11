@@ -62,7 +62,8 @@ def predict():
             raise HTTPException(status_code=400, detail="Not enough data points")
 
         # Load model
-        model = load_model(MODEL_PATH)
+        model = load_model(MODEL_PATH, compile=False)
+
 
         # Evaluate
         pred = model.predict(X, verbose=0)
