@@ -1,17 +1,16 @@
 FROM python:3.10-slim
 
-# Set working directory
 WORKDIR /app
 
-# Copy files
-COPY requirements.txt /app/
+# Install system deps (needed for numpy / tensorflow sometimes)
+RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /app/
+COPY . .
 
-# Expose port
+# Railway uses PORT env var (usually 8080)
 EXPOSE 8080
 
-# Run the server
-CMD ["sh", "-c", "uvicorn ml_service:app --host 0.0.0.0 --port ${PORT:-8080}"]
-
+CMD ["sh", "-c", "uvicorn ml_service:app --host 0.0.0.0 --port ${PORT}"]
