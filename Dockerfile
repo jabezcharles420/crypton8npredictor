@@ -14,3 +14,5 @@ COPY . .
 EXPOSE 8080
 
 CMD ["sh", "-c", "uvicorn ml_service:app --host 0.0.0.0 --port ${PORT}"]
+
+#klabsb
